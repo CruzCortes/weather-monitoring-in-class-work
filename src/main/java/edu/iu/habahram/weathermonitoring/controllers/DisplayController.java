@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/displays")
 public class DisplayController {
     private CurrentConditionDisplay currentConditionDisplay;
-
-    public DisplayController(CurrentConditionDisplay currentConditionDisplay
-                             ) {
+    private StatisticsDisplay statisticsDisplay;
+    public DisplayController(CurrentConditionDisplay currentConditionDisplay) {
         this.currentConditionDisplay = currentConditionDisplay;
+        this.statisticsDisplay = new StatisticsDisplay();
     }
 
     @GetMapping
@@ -26,7 +26,10 @@ public class DisplayController {
         html += "<li>";
         html += String.format("<a href=/displays/%s>%s</a>", currentConditionDisplay.id(), currentConditionDisplay.name());
         html += "</li>";
-
+        // Add the new statistics display link here
+        html += "<li>";
+        html += String.format("<a href=/displays/%s>%s</a>", statisticsDisplay.id(), statisticsDisplay.name());
+        html += "</li>";
         html += "</ul>";
         return ResponseEntity
                 .status(HttpStatus.FOUND)
@@ -38,14 +41,20 @@ public class DisplayController {
     public ResponseEntity display(@PathVariable String id) {
         String html = "";
         HttpStatus status = HttpStatus.NOT_FOUND;
+
         if (id.equalsIgnoreCase(currentConditionDisplay.id())) {
             html = currentConditionDisplay.display();
             status = HttpStatus.FOUND;
+        } else if (id.equalsIgnoreCase(statisticsDisplay.id())) {
+            html = statisticsDisplay.display();
+            status = HttpStatus.FOUND;
         }
+
         return ResponseEntity
                 .status(status)
                 .body(html);
     }
+
 
     @GetMapping("/{id}/subscribe")
     public ResponseEntity subscribe(@PathVariable String id) {
@@ -80,4 +89,6 @@ public class DisplayController {
                 .status(status)
                 .body(html);
     }
+
+
 }
