@@ -26,7 +26,7 @@ public class DisplayController {
         html += "<li>";
         html += String.format("<a href=/displays/%s>%s</a>", currentConditionDisplay.id(), currentConditionDisplay.name());
         html += "</li>";
-        // Add the new statistics display link here
+        // new statistics display link
         html += "<li>";
         html += String.format("<a href=/displays/%s>%s</a>", statisticsDisplay.id(), statisticsDisplay.name());
         html += "</li>";

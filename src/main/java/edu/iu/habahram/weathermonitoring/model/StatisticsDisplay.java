@@ -1,13 +1,15 @@
 package edu.iu.habahram.weathermonitoring.model;
 
-public class StatisticsDisplay implements Observer {
+import org.springframework.stereotype.Component;
+
+@Component
+public class StatisticsDisplay implements Observer, DisplayElement {
 
     // TODO
     private String id;
     private String name;
 
     public StatisticsDisplay() {
-        // Assuming there's a way to set these properties
         this.id = "statistics";
         this.name = "Statistics Screen";
     }
